@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.urls import path
+# from . import views
+# from django.views import member
+
 urlpatterns = [
     path('lms/', include('lms.urls')),
     path('admin/', admin.site.urls),
+    # path('members/', member_dash, name='member_list'),
+    
 ]
