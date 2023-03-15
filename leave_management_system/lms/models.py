@@ -7,9 +7,10 @@ class Members(models.Model):
     email = models.EmailField()
     # def __str__(self):
     #     return self.first_name
-    
-def __str__(self):
+    def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    
+
 
 # class Choice(models.Model):
 #     question = models.ForeignKey(Question, on_delete=models.CASCADE)
