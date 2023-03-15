@@ -7,10 +7,23 @@
     <title>Document</title>
 </head>
 <body>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Role</th>
+            <th>Year</th>
+        </tr>
     {% for detail in members %}
-    <article>
-        <h2><a href="">{{ detail.first_name }}</a></h2>
-    </article>
+
+    <tr>
+        <td><a href="">{{ detail.first_name }}</a></td>
+        <td><a href="">{{ detail.email}}</a></td>
+        <td><a href="">{{ detail.gender}}</a></td>
+        <td><a href="">{{ detail.status}}</a></td>
+        <td><a href="">{{ detail.year}}</a></td>
+    </tr>
 {% endfor %}
 </body>
 </html>
