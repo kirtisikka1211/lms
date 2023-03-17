@@ -33,11 +33,19 @@ table {
     right: 10px;}
   #batch {
       position: relative;
-      top: -10px;
+      top: -25px;
       left: 350px;
     }
+<<<<<<< HEAD
     .login-info {
       position: relative;
       top: -10px;
       right: 35px;
     }
+=======
+.btn {
+  position: relative;
+  top: -15px;
+  left: 1300px;
+}
+>>>>>>> d89b02fa7d2c75b4c5f61ca140d2acf407548290
