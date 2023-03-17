@@ -19,17 +19,18 @@
             <br/>
             <form>
                <div class="form-group mx-sm-3 mb-2">
-                <input name="search" type="" class="form-control w-25" id="myInput" onkeyup="myFunction()" placeholder="Keyword">
+                <input name="search" type="" class="form-control w-25" id="myInput" onkeyup="myFunction()" placeholder="Search by name">
                 </div>
                 <!-- <button type="submit" class="btn btn-success btn-sm mb-2">Search</button> -->
            </form>
-           <button type="button" id="req" class="btn btn-outline-dark"><a href="{% url 'leave_request' %}">Leave request</a></button>
-
+           <a href="leave">
+           <button type="button" id="req" class="btn btn-outline-dark">Leave request</button>
+           </a>
                 <br/>
                 <div class="form-group">
                     <select class="form-control w-25" id="batch" onchange="filterByYear()">
                         
-                      <option>Select year</option>
+                      <option>Search by year</option>
                       <option>2020</option>
                       <option>2021</option>
                       <option>2022</option>
@@ -56,11 +57,10 @@
             </table>
             {% if user.is_authenticated %}
             <div class="login-info">
-            <p>{{ user.username }}</p>
-            <p> {{ user.email }}.</p>
+            <p>Welcome {{ user.username }}</p>
             {% else %}
                 <p>You are not logged in.</p>
-                <a href="{% url 'login' %}">Login</a>
+                <!-- <a href="{% url 'login' %}">Login</a> -->
             {% endif %}
             <script>
                 function myFunction() {

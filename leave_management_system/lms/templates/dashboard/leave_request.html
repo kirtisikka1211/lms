@@ -1,8 +1,28 @@
-{% comment %} {% extends 'members_list.html' %} {% endcomment %}
+
+
 {% load static %}
-{% block content %}
-    <h1>Leave Request Form</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Leave Management Form</title>
+  </head>
+  <body>
+    <h1>Leave Management Form</h1>
     <form method="post">
-        <button type="submit" class="btn btn-primary">Submit</button>
+      {% csrf_token %}
+      
+      <label for="start-date">Start Date:</label>
+      <input type="date" id="start-date" name="start-date"><br><br>
+      
+      <label for="end-date">End Date:</label>
+      <input type="date" id="end-date" name="end-date"><br><br>
+      
+      <label for="reason">Reason:</label>
+      <input type="text" id="reason" name="reason"><br><br>
+      
+     
+      <input type="submit" value="Submit">
+
     </form>
-{% endblock %}
+  </body>
+</html>

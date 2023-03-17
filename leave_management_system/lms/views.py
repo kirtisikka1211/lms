@@ -3,6 +3,7 @@ from .models import Members
 from django.shortcuts import render
 # from .filters import OrderFilter
 from django.db.models import Q
+from django.core.mail import send_mail
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the polls index.")
 def members_list(request):
@@ -16,24 +17,33 @@ def members_list(request):
     # myFilter= OrderFilter(request.GET, queryset= name)
     # name= myFilter.qs
     return render(request, 'dashboard/members_list.html', {'members': members})
-# Define function to search book
-# def search(request):
-#     results = []
-
-#     if request.method == "GET":
-#         query = request.GET.get('search')
-
-#         if query == '':
-#             query = 'None'
-
-#         results = Members.objects.filter(Q(first_name__icontains=query) | Q(gender__icontains=query) | Q(email__icontains=query) | Q(status__icontains=query) | Q(year__icontains=query))
-
-#     return render(request, 'members_list.html', {'query': query, 'results': results})
-
 
 def my_view(request):
     user = request.user
     context = {'user': user}
     return render(request, 'my_template.html', context)
 def leave_request(request):
-    return render(request, 'leave_request.html')
+    return render(request, 'dashboard/leave_request.html')
+from django.shortcuts import render
+from django.core.mail import send_mail
+
+def leave_form(request):
+    if request.method == 'POST':
+        start_date = request.POST.get('start-date')
+        end_date = request.POST.get('end-date')
+        reason = request.POST.get('reason')
+        
+     
+
+        send_mail(
+            'Subject here',
+            'Here is the message.',
+            'from@example.com',
+            ['to@example.com'],
+            fail_silently=False,
+        )
+        return render(request, 'success.html')
+    else:
+        return render(request, 'leave_form.html')
+
+
