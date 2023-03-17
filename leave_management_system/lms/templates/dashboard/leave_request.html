@@ -1,9 +1,28 @@
+
+
 {% load static %}
-{% block content %}
-    <h1>Leave Request Form</h1>
-    <form action="/your-name/" method="post">
-        <label for="your_name">Your name: </label>
-        <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
-        <input type="submit" value="OK">
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Leave Management Form</title>
+  </head>
+  <body>
+    <h1>Leave Management Form</h1>
+    <form method="post">
+      {% csrf_token %}
+      
+      <label for="start-date">Start Date:</label>
+      <input type="date" id="start-date" name="start-date"><br><br>
+      
+      <label for="end-date">End Date:</label>
+      <input type="date" id="end-date" name="end-date"><br><br>
+      
+      <label for="reason">Reason:</label>
+      <input type="text" id="reason" name="reason"><br><br>
+      
+     
+      <input type="submit" value="Submit">
+
     </form>
-{% endblock %}
+  </body>
+</html>
