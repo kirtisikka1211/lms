@@ -22,6 +22,8 @@ from django.urls import path
 urlpatterns = [
     path('lms/', include('lms.urls')),
     path('admin/', admin.site.urls),
+    # path('leave-request/', views.leave_request, name='leave_request'),
+
     # path('members/', member_dash, name='member_list'),
     
 ]

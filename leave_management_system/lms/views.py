@@ -35,3 +35,5 @@ def my_view(request):
     user = request.user
     context = {'user': user}
     return render(request, 'my_template.html', context)
+def leave_request(request):
+    return render(request, 'leave_request.html')
