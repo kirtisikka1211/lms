@@ -1,8 +1,8 @@
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 70%;
     position: relative;
-    top: 70px;
+    top: 110px;
     border: 1px solid black;  
     margin-left: auto;  
     margin-right: auto;  
@@ -29,23 +29,24 @@ table {
  
   #myInput {
     position: relative;
-    top: 60px;
-    right: 10px;}
+    top: 140px;
+    left:  180px;}
   #batch {
       position: relative;
-      top: -25px;
-      left: 350px;
+      top: 55px;
+      left: 550px;
     }
-<<<<<<< HEAD
-    .login-info {
+
+  .login-info {
+    position: relative;
+    top: -470px;
+    left: 1370px;
+    }
+
+    .btn {
       position: relative;
-      top: -10px;
-      right: 35px;
+      height: 71%;
+      top: -28px;
+      width: 12%;
+      left: 90%;
     }
-=======
-.btn {
-  position: relative;
-  top: -15px;
-  left: 1300px;
-}
->>>>>>> d89b02fa7d2c75b4c5f61ca140d2acf407548290

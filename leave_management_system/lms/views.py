@@ -16,22 +16,10 @@ def members_list(request):
     # myFilter= OrderFilter(request.GET, queryset= name)
     # name= myFilter.qs
     return render(request, 'dashboard/members_list.html', {'members': members})
-# Define function to search book
-# def search(request):
-#     results = []
-
-#     if request.method == "GET":
-#         query = request.GET.get('search')
-
-#         if query == '':
-#             query = 'None'
-
-#         results = Members.objects.filter(Q(first_name__icontains=query) | Q(gender__icontains=query) | Q(email__icontains=query) | Q(status__icontains=query) | Q(year__icontains=query))
-
-#     return render(request, 'members_list.html', {'query': query, 'results': results})
-
 
 def my_view(request):
     user = request.user
     context = {'user': user}
     return render(request, 'my_template.html', context)
+def leave_request(request):
+    return render(request, 'dashboard/leave_request.html')
