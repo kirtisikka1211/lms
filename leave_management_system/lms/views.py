@@ -29,3 +29,9 @@ def members_list(request):
 #         results = Members.objects.filter(Q(first_name__icontains=query) | Q(gender__icontains=query) | Q(email__icontains=query) | Q(status__icontains=query) | Q(year__icontains=query))
 
 #     return render(request, 'members_list.html', {'query': query, 'results': results})
+
+
+def my_view(request):
+    user = request.user
+    context = {'user': user}
+    return render(request, 'my_template.html', context)

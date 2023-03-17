@@ -52,6 +52,14 @@
                 </tr>
             {% endfor %}
             </table>
+            {% if user.is_authenticated %}
+            <div class="login-info">
+            <p>{{ user.username }}</p>
+            <p> {{ user.email }}.</p>
+            {% else %}
+                <p>You are not logged in.</p>
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
             <script>
                 function myFunction() {
                   var input, filter, table, tr, td, i, txtValue;
@@ -91,8 +99,7 @@
                     }
                   }
                    
-                  document.getElementById("batch").addEventListener("change", filterByYear);
-                  document.getElementById("batch").addEventListener("change", filterByYear);
+                 
                   
                  
                   
