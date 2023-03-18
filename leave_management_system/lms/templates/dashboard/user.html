@@ -1,7 +1,7 @@
-
+{% load static %}
 {% for member in members %}
     {% if member.id == id %}
-        <h1><a href="user/ {{member.id }}">{{ member.first_name }}</a></h1>
+        <h1>{{ member.first_name }}</h1>
         <p>Email: {{ member.email }}</p>
         <p>Gender: {{ member.gender }}</p>
         <p>Role: {{ member.status }}</p>
