@@ -1,6 +1,6 @@
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 75%;
     position: relative;
     top: 110px;
     border: 1px solid black;  
@@ -40,7 +40,7 @@ table {
   .login-info {
     position: relative;
     top: -465px;
-    left: 1000px;
+    left: 1450px;
     }
 
     .btn {
@@ -48,5 +48,5 @@ table {
       height: 71%;
       top: -28px;
       width: 12%;
-      left: 75%;
+      left: 98%;
     }

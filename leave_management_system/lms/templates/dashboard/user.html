@@ -1,6 +1,10 @@
-{% extends 'members_list.html' %}
-{% block content %}
-    <h1>{{ details.name }}</h1>
-    <p>Email: {{ details.email }}</p>
-    <p>Status {{ details.status }}</p>
-{% endblock %}
+
+{% for member in members %}
+    {% if member.id == id %}
+        <h1><a href="user/ {{member.id }}">{{ member.first_name }}</a></h1>
+        <p>Email: {{ member.email }}</p>
+        <p>Gender: {{ member.gender }}</p>
+        <p>Role: {{ member.status }}</p>
+        <p>Year: {{ member.year }}</p>
+    {% endif %}
+{% endfor %}

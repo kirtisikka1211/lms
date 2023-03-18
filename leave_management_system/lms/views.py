@@ -1,11 +1,10 @@
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from .models import Members
 from django.shortcuts import render
-# from .filters import OrderFilter
 from django.db.models import Q
 from django.core.mail import send_mail
-from django.shortcuts import render,get_object_or_404
-from django.core.mail import send_mail
+from django.shortcuts import render, get_object_or_404, redirect
+
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the polls index.")
 def members_list(request):
@@ -26,13 +25,14 @@ def my_view(request):
     return render(request, 'my_template.html', context)
 def leave_request(request):
     return render(request, 'dashboard/leave_request.html')
-
-
 def leave_form(request):
     if request.method == 'POST':
         start_date = request.POST.get('start-date')
         end_date = request.POST.get('end-date')
         reason = request.POST.get('reason')
+
+
+
         send_mail(
             'Subject here',
             'Here is the message.',
@@ -43,8 +43,10 @@ def leave_form(request):
         return render(request, 'success.html')
     else:
         return render(request, 'leave_form.html')
-    
-def user(request,member_id):
-    member = get_object_or_404(user, member_id=member_id)
-    return render(request, 'dashboard/user.html', {'members': member})
+def user(request, id):
+    user = get_object_or_404(Members, id=id) 
+    members = Members.objects.all()
+    context = {'members': members, 'id': id}
+    return render(request, 'dashboard/user.html', context)
 
+   
