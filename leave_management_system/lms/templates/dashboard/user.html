@@ -1,8 +1,9 @@
-{% load static %}
+
 {% for member in members %}
     {% if member.id == id %}
         <h1>{{ member.first_name }}</h1>
-        <p>Email: {{ member.email }}</p>
+        <p>Email: {{ member.email }}</p>   
+        <img src="{{ member.image.url }}" alt="{{ member.first_name }}'s image "width=200>
         <p>Gender: {{ member.gender }}</p>
         <p>Role: {{ member.status }}</p>
         <p>Year: {{ member.year }}</p>
