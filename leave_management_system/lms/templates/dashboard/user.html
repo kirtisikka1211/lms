@@ -7,6 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    
+    {% for mem in members %}
+        {% if mem.id == id %}
+            <h1>{{ mem.first_name }} </h1>
+            <p>Email: {{ mem.email }}</p>
+            <p>Role: {{ mem.status }}</p>
+            <p>Year: {{ mem.year }}</p>
+        {% endif %}
+    {% endfor %}
 </body>
 </html>

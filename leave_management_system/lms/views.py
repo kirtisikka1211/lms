@@ -44,5 +44,5 @@ def leave_form(request):
     else:
         return render(request, 'leave_form.html')
 def user(request, id):
-    user = get_object_or_404(Members, id=id)
-    return render(request, 'dashboard/user.html')
+    members = Members.objects.all()
+    return render(request, 'dashboard/user.html',{'members': members})
