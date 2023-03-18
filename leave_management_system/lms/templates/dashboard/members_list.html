@@ -47,7 +47,8 @@
                 {% for detail in members %}
             
                 <tr>
-                    <td><a href="">{{ detail.first_name }}</a></td>
+                
+                  <td><a href="user/{{ detail.id }}">{{ detail.first_name }}</a></td>
                     <td><a href="">{{ detail.email}}</a></td>
                     <td><a href="">{{ detail.gender}}</a></td>
                     <td><a href="">{{ detail.status}}</a></td>
@@ -55,6 +56,9 @@
                 </tr>
             {% endfor %}
             </table>
+            {% for member in members %}
+            <li><a href="">{{ detail.first_name }}</a></li>
+        {% endfor %} 
             {% if user.is_authenticated %}
             <div class="login-info">
             <p>Welcome {{ user.username }}</p>
