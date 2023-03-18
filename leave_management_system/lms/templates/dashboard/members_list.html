@@ -47,10 +47,10 @@
                 {% for detail in members %}
                 <tr>
                     <td><a href="user/{{ detail.id }}">{{ detail.first_name }}</a></td>
-                    <td><a href="">{{ detail.email}}</a></td>
-                    <td><a href="">{{ detail.gender}}</a></td>
-                    <td><a href="">{{ detail.status}}</a></td>
-                    <td><a href="">{{ detail.year}}</a></td>
+                    <td>{{ detail.email}}</td>
+                    <td>{{ detail.gender}}</td>
+                    <td>{{ detail.status}}</td>
+                    <td>{{ detail.year}}</td>
                 </tr>
             {% endfor %}
             </table>
