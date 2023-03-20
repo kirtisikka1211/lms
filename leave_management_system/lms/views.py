@@ -4,7 +4,9 @@ from django.shortcuts import render
 from django.db.models import Q
 from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404, redirect
-
+from django.conf import settings
+from leave_management_system.settings import EMAIL_HOST_USER
+# import ezgmail
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the polls index.")
 def members_list(request):
@@ -23,26 +25,28 @@ def my_view(request):
     user = request.user
     context = {'user': user}
     return render(request, 'my_template.html', context)
+
 def leave_request(request):
-    return render(request, 'dashboard/leave_request.html')
-def leave_form(request):
     if request.method == 'POST':
         start_date = request.POST.get('start-date')
         end_date = request.POST.get('end-date')
         reason = request.POST.get('reason')
 
-
-
         send_mail(
-            'Subject here',
-            'Here is the message.',
-            'from@example.com',
-            ['to@example.com'],
+            'Leave Request',
+            f'Start Date: {start_date}\nEnd Date: {end_date}\nReason: {reason}',
+            settings.EMAIL_HOST_USER,
+            ['kshitijthareja03@gmail.com'],
             fail_silently=False,
+            auth_user=settings.EMAIL_HOST_USER,
+            auth_password=settings.EMAIL_HOST_PASSWORD,
         )
-        return render(request, 'success.html')
-    else:
-        return render(request, 'leave_form.html')
+
+        return redirect('dashboard/success.html')
+
+    return render(request, 'dashboard/leave_request.html')
+
+    
 def user(request, id):
     user = get_object_or_404(Members, id=id) 
     members = Members.objects.all()
