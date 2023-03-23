@@ -16,6 +16,7 @@ def my_view(request):
     user = request.user
     context = {'user': user}
     return render(request, 'my_template.html', context)
+
 def leave_request(request):
     if request.method == 'POST':
         start_date = request.POST.get('start-date')
