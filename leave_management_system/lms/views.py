@@ -22,10 +22,20 @@ def leave_request(request):
         start_date = request.POST.get('start-date')
         end_date = request.POST.get('end-date')
         reason = request.POST.get('reason')
-        emails = Members.objects.values_list('emails', flat=True)
-        for email in emails:
-            msg = EmailMultiAlternatives('Leave request', f'Start Date: {start_date}\nEnd Date: {end_date}\nReason: {reason}', EMAIL_HOST_USER, [email])
-            msg.send()
+        mem = Members.objects.all()
+        for member in mem:
+            username = member.username 
+            print(username)
+            if username == request.user.username:
+                # mentor = member.mentor
+                email = member.mentoremail
+            maillist= email.split(", ")
+            print(maillist)
+            msg = EmailMultiAlternatives('Leave request', f'Start Date: {start_date}\nEnd Date: {end_date}\nReason: {reason}', EMAIL_HOST_USER, maillist)
+                
+            
+        if msg.send():
+            messages.success(request, 'Leave request submitted successfully.')
       
         
         
@@ -33,8 +43,7 @@ def leave_request(request):
         
         # msg= EmailMultiAlternatives('Leave request', f'Start Date: {start_date}\nEnd Date: {end_date}\nReason: {reason}', EMAIL_HOST_USER, ['kshitijthareja03@gmail.com'])
         # msg.send()
-        if msg.send():
-            messages.success(request, 'Leave request submitted successfully.')
+        
       
     return render(request, 'dashboard/leave_request.html')   
 def user(request, id):
