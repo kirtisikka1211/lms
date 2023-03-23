@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('lms/', include('lms.urls')),
     path('admin/', admin.site.urls),
+    # path('app/', include('app.urls')),
 
     # path('leave-request/', views.leave_request, name='leave_request'),
 

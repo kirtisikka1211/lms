@@ -5,7 +5,8 @@ from django.db.models import Q
 from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
-from leave_management_system.settings import EMAIL_HOST_USER
+from django.contrib import messages
+# from leave_management_system.settings import EMAIL_HOST_USER
 # import ezgmail
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the polls index.")
@@ -36,13 +37,14 @@ def leave_request(request):
             'Leave Request',
             f'Start Date: {start_date}\nEnd Date: {end_date}\nReason: {reason}',
             settings.EMAIL_HOST_USER,
-            ['kshitijthareja03@gmail.com'],
+            # 'kirtisikka972@gmail.com',
+            ['kirtisikka972@gmail.com'],
             fail_silently=False,
-            auth_user=settings.EMAIL_HOST_USER,
-            auth_password=settings.EMAIL_HOST_PASSWORD,
-        )
+            # auth_user=settings.EMAIL_HOST_USER,
+            # auth_password=settings.EMAIL_HOST_PASSWORD,
+           )
 
-        return redirect('dashboard/success.html')
+        messages.success(request, 'Your leave request has been submitted successfully!')
 
     return render(request, 'dashboard/leave_request.html')
 
