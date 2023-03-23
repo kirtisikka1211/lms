@@ -16,13 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.urls import path
+from django.conf import *
+from django.conf.urls.static import static
 
 
 urlpatterns = [
     path('lms/', include('lms.urls')),
     path('admin/', admin.site.urls),
-    # path('leave-request/', views.leave_request, name='leave_request'),
 
-    # path('members/', member_dash, name='member_list'),
-    
-]
+] + static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
+

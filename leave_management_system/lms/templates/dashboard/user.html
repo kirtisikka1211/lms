@@ -1,19 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {% for mem in members %}
-        {% if mem.id == id %}
-            <h1>{{ mem.first_name }} </h1>
-            <p>Email: {{ mem.email }}</p>
-            <p>Role: {{ mem.status }}</p>
-            <p>Year: {{ mem.year }}</p>
-        {% endif %}
-    {% endfor %}
-</body>
-</html>
+
+{% for member in members %}
+    {% if member.id == id %}
+        <h1>{{ member.first_name }}</h1>
+        <p>Email: {{ member.email }}</p>
+        <p>Gender: {{ member.gender }}</p>
+        <p>Role: {{ member.status }}</p>
+        <p>Year: {{ member.year }}</p>
+        <img src="{{member.image.url}}" width= "240" alt="">
+    {% endif %}
+{% endfor %}
