@@ -22,17 +22,17 @@ def leave_request(request):
         start_date = request.POST.get('start-date')
         end_date = request.POST.get('end-date')
         reason = request.POST.get('reason')
-        emails = Members.objects.values_list('emails', flat=True)
-        for email in emails:
-            msg = EmailMultiAlternatives('Leave request', f'Start Date: {start_date}\nEnd Date: {end_date}\nReason: {reason}', EMAIL_HOST_USER, [email])
-            msg.send()
-      
+        actuser= request.user.username
+        mydata = Members.objects.all()
+        for detail in mydata:
+            if detail.username==actuser:
+                print(detail.username)
+                mail= detail.mentoremail
+        maillist= mail.split(", ")
+        print(maillist)
+        print(actuser)
         
-        
-        
-        
-        # msg= EmailMultiAlternatives('Leave request', f'Start Date: {start_date}\nEnd Date: {end_date}\nReason: {reason}', EMAIL_HOST_USER, ['kshitijthareja03@gmail.com'])
-        # msg.send()
+        msg = EmailMultiAlternatives('Leave request', f'Start Date: {start_date}\nEnd Date: {end_date}\nReason: {reason}', EMAIL_HOST_USER, maillist)        
         if msg.send():
             messages.success(request, 'Leave request submitted successfully.')
       
