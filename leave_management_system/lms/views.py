@@ -33,7 +33,7 @@ def leave_request(request):
                 print(email)
         maillist= email.split(", ")
         print(maillist)
-        msg = EmailMultiAlternatives('Leave request', f'Start Date: {start_date}\nEnd Date: {end_date}\nReason: {reason}', EMAIL_HOST_USER, maillist)
+        msg = EmailMultiAlternatives('Leave request', f'Start Date: {start_date}\nEnd Date: {end_date}\nReason: {reason}', EMAIL_HOST_USER, maillist)      
                 
             
         if msg.send():
@@ -52,6 +52,7 @@ def user(request, id):
     user = get_object_or_404(Members, id=id) 
     members = Members.objects.all()
     context = {'members': members, 'id': id}
+    
     return render(request, 'dashboard/user.html', context)
 
    

@@ -17,7 +17,21 @@
       <label for="reason">Reason:</label>
       <input type="text" id="reason" name="reason"><br><br>
       <input type="submit" value="Submit">
-    
+      z= {user.username}
+    {% for members in mem %}
+
+      y= {members.username}
+      
+      {% if z == y %}
+          a={{members.year}}
+          print(a)
+        {% if a==2020 or a==2021 %}
+        <a href="#">
+          <button type="button" id="req" class="btn btn-outline-dark">Sample</button>
+        </a>
+        {% endif %}
+      {% endif %}
+    {% endfor %}                      
 
     </form>
   </body>
