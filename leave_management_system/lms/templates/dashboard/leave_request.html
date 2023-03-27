@@ -27,6 +27,21 @@
       <input type="submit" value="Submit">
       </div>
     </form>
+    <script>
+      function validateForm() {
+        var startDate = new Date(document.getElementById("start-date").value);
+        var endDate = new Date(document.getElementById("end-date").value);
+        
+        if (endDate > startDate) {
+          alert("End date must be greater than start date.");
+          return false;
+        }
+        
+        return true;
+      }
+    </script>
+  </body>
+</html>
    
     {% comment %} {% if val %}
     <div>
@@ -38,5 +53,5 @@
     
     
     
-  </body>
-</html>
+  {% comment %} </body>
+</html> {% endcomment %}
