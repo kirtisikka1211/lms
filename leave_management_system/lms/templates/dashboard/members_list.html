@@ -26,6 +26,13 @@
            <a href="leave">
            <button type="button" id="req" class="btn btn-outline-dark">Leave request</button>
            </a>
+           {% if value %}
+           <div>
+             <a href="#">
+               <button type="button" id="req" class="btn btn-outline-dark">Mentee requests</button>
+             </a>
+           </div>
+           {% endif %}
                 <br/>
                 <div class="form-group">
                     <select class="form-control w-25" id="batch" onchange="filterByYear()">
