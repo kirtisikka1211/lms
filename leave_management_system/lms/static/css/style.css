@@ -1,3 +1,7 @@
+body {
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
 table {
     border-collapse: collapse;
     width: 75%;
@@ -33,14 +37,14 @@ table {
     left:  180px;}
   #batch {
       position: relative;
-      top: 55px;
+      top: 15px;
       left: 550px;
     }
 
   .login-info {
     position: relative;
-    top: -465px;
-    left: 1450px;
+    top: 20px;
+    left: 112%;
     }
 
     .btn {

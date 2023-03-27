@@ -21,11 +21,28 @@
                <div class="form-group mx-sm-3 mb-2">
                 <input name="search" type="" class="form-control w-25" id="myInput" onkeyup="myFunction()" placeholder="Search by name">
                 </div>
-                <!-- <button type="submit" class="btn btn-success btn-sm mb-2">Search</button> -->
            </form>
+           <div class="login-info">
+            {% if user.is_authenticated %}
+              <p class="info">Welcome {{ user.username }}</p>
+              {% else %}
+                  <p>You are not logged in.</p>
+              {% endif %}
+          
+        
+          </div>
+          {% if value %}
+          <div>
+            <a href="#">
+            <button type="button" id="req" class="btn btn-outline-dark">Mentee requests</button>
+            </a>
+          </div>
+          {% endif %}
            <a href="leave">
            <button type="button" id="req" class="btn btn-outline-dark">Leave request</button>
            </a>
+          
+           
                 <br/>
                 <div class="form-group">
                     <select class="form-control w-25" id="batch" onchange="filterByYear()">
@@ -54,16 +71,8 @@
                 </tr>
             {% endfor %}
             </table>
-            {% for member in members %}
-            <a href="">{{ detail.first_name }}</a>
-        {% endfor %} 
-            {% if user.is_authenticated %}
-            <div class="login-info">
-            <p>Welcome {{ user.username }}</p>
-            {% else %}
-                <p>You are not logged in.</p>
-               
-            {% endif %}
+            
+            
             <script>
                 function myFunction() {
                   var input, filter, table, tr, td, i, txtValue;
@@ -111,6 +120,5 @@
                 </script>   
         </div>
         </div>
-
 </body>
 </html>
