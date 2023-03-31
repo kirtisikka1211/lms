@@ -50,18 +50,25 @@ def leave_request(request):
                     valid = False      
                 if valid:
                     
+                    
                     if msg.send():
-                        messages.success(request, 'Leave request submitted successfully.')      
+
+                        messages.success(request, 'Leave request submitted successfully.')     
+                        for members in mem:
+                            username = members.username 
+                            if username == request.user.username:
+                                members.start_date= start_date
+                                members.end_date=end_date
+                                members.reason= reason
+                                members.save(update_fields=['start_date', 'end_date', 'reason'])
+                        
+                        
                     else:
                         messages.error(request, 'Leave request unsuccessful.')
                 else:
                     messages.error(request, "Please mention valid time period")
             except:
                 messages.error(request, "Leave request unsuccessful, please give valid details.")
-
-
-
-   
 
     return render(request, 'dashboard/leave_request.html')   
 def user(request, id):
