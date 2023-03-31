@@ -11,8 +11,9 @@ class Members(models.Model):
     mentee = models.CharField(max_length=100)    
     mentor = models.CharField(max_length=100)
     mentoremail=models.CharField(max_length=100)
-    
-
+    start_date= models.DateTimeField(null=True)
+    end_date = models.DateTimeField(null=True)
+    reason= models.TextField()
     image=models.ImageField(upload_to='profile_image', blank=True)
 
     def __str__(self):

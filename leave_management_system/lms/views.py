@@ -10,7 +10,6 @@ from django.contrib import messages
 
 def members_list(request):
     members = Members.objects.all()
-    # memb=Members.objects.all() 
     value= False
     val= False
 
