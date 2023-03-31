@@ -15,6 +15,7 @@ class Members(models.Model):
     end_date = models.DateField(null=True)
     reason= models.TextField()
     image=models.ImageField(upload_to='profile_image', blank=True)
+    req_sent=models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.first_name}"
