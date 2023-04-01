@@ -13,6 +13,30 @@
     
 </head>
 <body>
-    
+    <h2>Pending requests</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Employee</th>
+                <th scope="col">Start date</th>
+                <th scope="col">End date</th>
+                <th scope="col">Reason</th>
+                <th scope="col">Approve</th>
+                <th scope="col">Reject</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+                <tr>
+                    <td>{{request.user_id}}</td>
+                    <td>{{request.start_date}}</td>
+                    <td>{{request.end_date}}</td>
+                    <td>{{request.reason}}</td>
+                    <td><a href="#">Approve</a></td>
+                    <td><a href="#">Reject</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>
