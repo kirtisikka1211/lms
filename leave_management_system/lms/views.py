@@ -62,7 +62,7 @@ def leave_request(request):
                                 members.end_date=end_date
                                 members.reason= reason
                                 members.req_sent=True
-                                members.save(update_fields=['start_date', 'end_date', 'reason', 'req_sent'])
+                                members.save(update_fields=['start_date', 'end_date', 'reason','req_sent'])
                         
                         
                     else:
@@ -80,6 +80,9 @@ def user(request, id):
     
     return render(request, 'dashboard/user.html', context)
 def approve(request):
+    members = Members.objects.all()
+    for member in members:
+        
     return render(request, 'dashboard/approve.html')
 
 
