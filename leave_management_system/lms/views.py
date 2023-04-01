@@ -12,6 +12,7 @@ def members_list(request):
     members = Members.objects.all()
     value= False
     val= False
+    print(request.user.id)
 
     for det in members:
         uname= det.username
@@ -60,7 +61,8 @@ def leave_request(request):
                                 members.start_date= start_date
                                 members.end_date=end_date
                                 members.reason= reason
-                                members.save(update_fields=['start_date', 'end_date', 'reason'])
+                                members.req_sent=True
+                                members.save(update_fields=['start_date', 'end_date', 'reason', 'req_sent'])
                         
                         
                     else:
