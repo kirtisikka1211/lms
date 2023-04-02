@@ -11,15 +11,17 @@ class Members(models.Model):
     mentee = models.CharField(max_length=100)    
     mentor = models.CharField(max_length=100)
     mentoremail=models.CharField(max_length=100)
-    req_sent= models.BooleanField(default=False)
+
     image=models.ImageField(upload_to='profile_image', blank=True)
     def _str__(self):
         return f"{self.first_name}"
 class Leave(models.Model):
-	user = models.ForeignKey(User,on_delete=models.CASCADE,default=1)
-	start_date = models.DateField(null=True,blank=False)
-	end_date = models.DateField(null=True,blank=False)
-	reason = models.TextField(null=True,blank=True)
-	status = models.CharField(max_length=12,default='pending') #pending,approved,rejected,cancelled
-	def __str__(self):
-            return f"{self.user}'s leave request from {self.start_date} to {self.end_date}"
+        user = models.ForeignKey(User,on_delete=models.CASCADE,default=1)
+        start_date = models.DateField(null=True,blank=False)
+        end_date = models.DateField(null=True,blank=False)
+        reason = models.TextField(null=True,blank=True)
+        status = models.CharField(max_length=12,default='pending')  
+        is_approved= models.BooleanField(default=False)  
+        is_rejected= models.BooleanField(default=False) 
+        def __str__(self):
+                return f"{self.user}'s leave request from {self.start_date} to {self.end_date}"

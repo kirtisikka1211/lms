@@ -1,3 +1,4 @@
+from urllib.request import Request
 from django.http import HttpResponseRedirect
 from .models import Members, Leave
 from django.shortcuts import render
@@ -63,8 +64,8 @@ def leave_request(request):
                     for members in mem:
                         username = members.username
                         if username == request.user.username:
-                            members.req_sent = True
-                            members.save(update_fields=['req_sent'])
+                            # members.req_sent = True
+                            # members.save(update_fields=['req_sent'])
                             leave_req = Leave(
                                 start_date=start_date, end_date=end_date, reason=reason, user_id=members.user_id)
                             leave_req.save()
@@ -89,50 +90,71 @@ def user(request, id):
 
 
 def approve(request):
- 
+
     requests = Leave.objects.all()
-    members= Members.objects.all()
-    # for people in requests:
+    members = Members.objects.all()
     for member in members:
-    #         if people.user_id == member.user_id:
-    #             mentees= member.mentee
-        if request.user.username== member.username:
-            mentees= member.mentee
+        if request.user.username == member.username:
+            mentees = member.mentee
     mentee_list = mentees.split(", ")
     print(mentee_list)
-    for mentee_name in mentee_list:
-        for mem in members:
+    dict = {}
+    for mem in members:
+        for mentee_name in mentee_list:
             if mem.first_name == mentee_name:
                 for req in requests:
                     if mem.user_id == req.user_id:
-                        print(mem.username)
-                        print(mem.user_id)
-                        print(req.user_id)
-                        print(req.start_date)
-                        print(req.end_date)
-                        print(req.reason)
-                        print(req.status)
+                        dict[mentee_name] = req.user_id
+    print(dict)
 
-    return render(request, 'dashboard/approve.html', {'members': members, 'requests': requests})
-                
+    # status = request.POST.get('status')
+    # req_id = request.POST.get('request_id')
 
+    # print(req_id)
 
-                
-    # return render(request, 'dashboard/approve.html', {'members': members, 'requests': requests, })
-# if username == request.user.username:
-#                     if request.method == 'POST':
-#                         if request.POST.get('approve'):
-#                             leave = Leave.objects.get(id=request.POST.get('approve'))
-#                             leave.status = 'approved'
-#                             leave.save(update_fields=['status'])
-#                             messages.success(request, 'Leave request approved.')
-#                         elif request.POST.get('reject'):
-#                             leave = Leave.objects.get(id=request.POST.get('reject'))
-#                             leave.status = 'rejected'
-#                             leave.save(update_fields=['status'])
-#                             messages.success(request, 'Leave request rejected.')
-#                         elif request.POST.get('cancel'):
-#                             leave = Leave.objects.get(id=request.POST.get('cancel'))
-#                             leave.status = 'cancelled'
-#                             leave.save(update_fields=['status'])
-#                             messages.success(request, 'Leave request cancelled.')
+    # req = requests.objects.get(id=id)
+    if request.method == 'POST':
+        print(request.POST.keys())
+        print("hello")
+        
+
+            # if reqe.id == request.POST.get('request_id'):
+            #     reqe.status = "approved"
+            #     reqe.save(update_fields=['status'])
+            #     messages.success(request, 'Leave request approved.')
+            #     return HttpResponseRedirect(request.path_info)
+            # elif reqe.id in request.POST.keys():
+            #     reqe.status = "rejected"
+            #     reqe.save(update_fields=['status'])
+            #     messages.success(request, 'Leave request rejected.')
+            #     return HttpResponseRedirect(request.path_info)
+        reqe = requests.get(id=request.POST.get('request_id'))
+        if 'approved' in request.POST.keys():
+            reqe.status = "approved"
+            reqe.save(update_fields=['status'])
+            messages.success(request, 'Leave request approved.')
+            return HttpResponseRedirect(request.path_info)
+        elif 'rejected' in request.POST.keys():
+            print("hellohyyyh")
+            reqe.status = "rejected"
+            reqe.save(update_fields=['status'])
+            messages.success(request, 'Leave request rejected.')
+            return HttpResponseRedirect(request.path_info)
+
+    # return render(request, 'dashboard/approve.html', {'members': members, 'requests': requests, 'dict': dict})
+
+    return render(request, 'dashboard/approve.html', {'members': members, 'requests': requests, 'dict': dict})
+
+    # # if request.method == 'POST':
+    #     if 'Approve' in request.POST:
+    #         req.status = True
+    #         req.save(update_fields=['approved'])
+    #         messages.success(request, 'Leave request approved.')
+    #         return HttpResponseRedirect(request.path_info)
+
+    #     elif 'Reject' in request.POST:
+    #         req.status = True
+    #         req.save(update_fields=['rejected'])
+    #         messages.war(request, 'Leave request rejected.')
+    #         return HttpResponseRedirect(request.path_info)
+    # req = get_object_or_404(id=request.POST.get('id'))
