@@ -8,6 +8,7 @@ urlpatterns = [
     path('leave', views.leave_request, name='requests'),
     path('user/<int:id>', views.user, name='user'),
     path('approve', views.approve, name='approve'),
+    
 
 
 ] + static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
