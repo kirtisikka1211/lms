@@ -89,12 +89,50 @@ def user(request, id):
 
 
 def approve(request):
-    requests= Leave.objects.all()
+ 
+    requests = Leave.objects.all()
     members= Members.objects.all()
-    dict={}
-    for i in range(members.count()):
-        for j in range(requests.count()):
-            if members[i].user_id == requests[j].user_id:
-                username = members[i].username
-                dict[f"{request[j].user_id}"]= f"{username}"
-    return render(request, 'dashboard/approve.html', {'members': members, 'requests': requests, 'dict': dict})
+    # for people in requests:
+    for member in members:
+    #         if people.user_id == member.user_id:
+    #             mentees= member.mentee
+        if request.user.username== member.username:
+            mentees= member.mentee
+    mentee_list = mentees.split(", ")
+    print(mentee_list)
+    for mentee_name in mentee_list:
+        for mem in members:
+            if mem.first_name == mentee_name:
+                for req in requests:
+                    if mem.user_id == req.user_id:
+                        print(mem.username)
+                        print(mem.user_id)
+                        print(req.user_id)
+                        print(req.start_date)
+                        print(req.end_date)
+                        print(req.reason)
+                        print(req.status)
+
+    return render(request, 'dashboard/approve.html', {'members': members, 'requests': requests})
+                
+
+
+                
+    # return render(request, 'dashboard/approve.html', {'members': members, 'requests': requests, })
+# if username == request.user.username:
+#                     if request.method == 'POST':
+#                         if request.POST.get('approve'):
+#                             leave = Leave.objects.get(id=request.POST.get('approve'))
+#                             leave.status = 'approved'
+#                             leave.save(update_fields=['status'])
+#                             messages.success(request, 'Leave request approved.')
+#                         elif request.POST.get('reject'):
+#                             leave = Leave.objects.get(id=request.POST.get('reject'))
+#                             leave.status = 'rejected'
+#                             leave.save(update_fields=['status'])
+#                             messages.success(request, 'Leave request rejected.')
+#                         elif request.POST.get('cancel'):
+#                             leave = Leave.objects.get(id=request.POST.get('cancel'))
+#                             leave.status = 'cancelled'
+#                             leave.save(update_fields=['status'])
+#                             messages.success(request, 'Leave request cancelled.')

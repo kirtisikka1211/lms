@@ -17,7 +17,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">Employee</th>
+                <th scope="col">Mentee</th>
                 <th scope="col">Start date</th>
                 <th scope="col">End date</th>
                 <th scope="col">Reason</th>
@@ -26,15 +26,21 @@
             </tr>
         </thead>
         <tbody>
+
             {% for request in requests %}
-                <tr>
-                    <td>{{request.user_id}}</td>
-                    <td>{{request.start_date}}</td>
-                    <td>{{request.end_date}}</td>
-                    <td>{{request.reason}}</td>
-                    <td><a href="#">Approve</a></td>
-                    <td><a href="#">Reject</a></td>
-                </tr>
+                {% for member in members%}
+                    {% if request.user_id == member.user_id %}
+                       
+                        <tr>
+                            <td>{{member.first_name}}</td>
+                            <td>{{request.start_date}}</td>
+                            <td>{{request.end_date}}</td>
+                            <td>{{request.reason}}</td>
+                            <td><a href="#">Approve</a></td>
+                            <td><a href="#">Reject</a></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
         </tbody>
     </table>
