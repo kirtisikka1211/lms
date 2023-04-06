@@ -1,3 +1,4 @@
+from urllib.request import Request
 from django.http import HttpResponseRedirect
 from .models import Members, Leave
 from django.shortcuts import render
@@ -24,10 +25,10 @@ def members_list(request):
     return render(request, 'dashboard/members_list.html', {'members': members, "value": value, "val": val})
 
 
-def my_view(request):
-    user = request.user
-    context = {'user': user}
-    return render(request, 'my_template.html', context)
+# def my_view(request):
+#     user = request.user
+#     context = {'user': user}
+#     return render(request, 'my_template.html', context)
 
 
 def leave_request(request):
@@ -63,6 +64,8 @@ def leave_request(request):
                     for members in mem:
                         username = members.username
                         if username == request.user.username:
+                            # members.req_sent = True
+                            # members.save(update_fields=['req_sent'])
                             leave_req = Leave(
                                 start_date=start_date, end_date=end_date, reason=reason, user_id=members.user_id)
                             leave_req.save()
@@ -77,12 +80,20 @@ def leave_request(request):
 
     return render(request, 'dashboard/leave_request.html')
 
-
 def user(request, id):
     user = get_object_or_404(Members, id=id)
+    print(user)
     members = Members.objects.all()
-    context = {'members': members, 'id': id}
+    leave= Leave.objects.all()
+    for users in members:
+        if users.id==id:
+            user_id=users.user_id
+    for req in leave:
+        if req.user_id==user_id:
+            leave_id=req.id
 
+    print(leave_id)
+    context = {'members': members, 'id': id, 'leave': leave}
     return render(request, 'dashboard/user.html', context)
 
 
@@ -101,17 +112,42 @@ def approve(request):
                 for req in requests:
                     if mem.user_id == req.user_id:
                         dict[mentee_name] = req.user_id
-    if request.method == 'POST':
-        if 'approve' in request.POST:
-            req.status = "approved"
-            req.save(update_fields=['status'])
-            messages.success(request, 'Leave request approved.')
-            return HttpResponseRedirect(request.path_info)
-        elif 'reject' in request.POST:
-            req.status = "rejected"
-            req.save(update_fields=['status'])
-            messages.success(request, 'Leave request rejected.')
-            return HttpResponseRedirect(request.path_info)
     print(dict)
 
+    # status = request.POST.get('status')
+    # req_id = request.POST.get('request_id')
+
+    # print(req_id)
+
+    # req = requests.objects.get(id=id)
+    if request.method == 'POST':
+        print(request.POST.keys())
+        reqe = requests.get(id=request.POST.get('request_id'))
+        user_id= reqe.user_id
+        for user in members:
+            if user.user_id==user_id:
+                user_mail= user.email
+        maillist=[user_mail]
+        
+        if 'approved' in request.POST.keys():
+            reqe.status = "approved"
+            reqe.save(update_fields=['status'])
+            messages.success(request, 'Leave request approved.')
+            
+            msg = EmailMultiAlternatives(
+            'Leave request status', f'Your leave request from {reqe.start_date} to {reqe.end_date} has been approved ', EMAIL_HOST_USER, maillist)
+            msg.send()
+            return HttpResponseRedirect(request.path_info)
+        elif 'rejected' in request.POST.keys():
+            reqe.status = "rejected"
+            reqe.save(update_fields=['status'])
+            messages.success(request, 'Leave request rejected.')
+            msg = EmailMultiAlternatives(
+            'Leave request status', f'Your leave request from {reqe.start_date} to {reqe.end_date} has been rejected ', EMAIL_HOST_USER, maillist)
+            msg.send()
+            return HttpResponseRedirect(request.path_info)
+    
+
     return render(request, 'dashboard/approve.html', {'members': members, 'requests': requests, 'dict': dict})
+
+

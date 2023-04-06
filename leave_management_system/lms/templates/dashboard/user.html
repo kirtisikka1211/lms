@@ -1,12 +1,14 @@
 
 {% for member in members %}
     {% if member.id == id %}
+        <img src="{{member.image.url}}" width= "240" alt="">
         <h1>{{ member.first_name }}</h1>
         <p>Email: {{ member.email }}</p>
         <p>Gender: {{ member.gender }}</p>
         <p>Role: {{ member.status }}</p>
-        <p>Year: {{ member.year }}</p>   
+        <p>Year: {{ member.year }}</p> 
+          
             
-        <img src="{{member.image.url}}" width= "240" alt="">
+        
     {% endif %}
 {% endfor %}
