@@ -8,7 +8,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.mail import EmailMultiAlternatives
 from leave_management_system.settings import EMAIL_HOST_USER
 from django.contrib import messages
-
+from datetime import date
+from dateutil.relativedelta import relativedelta
 
 def members_list(request):
     members = Members.objects.all()
@@ -82,17 +83,58 @@ def leave_request(request):
 
 def user(request, id):
     user = get_object_or_404(Members, id=id)
-    print(user)
     members = Members.objects.all()
     leave= Leave.objects.all()
+    today= date.today()
+    six_months = date.today() + relativedelta(months=-6)
+    one_month = date.today() + relativedelta(months=-1)
+    weeks= date.today() + relativedelta(days=-7)
+    years= date.today() + relativedelta(years=-1)
+    n_weeks=0
+    n_6months=0
+    n_1month=0
+    n_years=0
     for users in members:
         if users.id==id:
             user_id=users.user_id
     for req in leave:
         if req.user_id==user_id:
-            leave_id=req.id
-
-    print(leave_id)
+            start=req.start_date
+            end=req.end_date
+            
+            if start>today:
+                continue
+            if req.start_date>=weeks and req.end_date<=today :
+                n_weeks+= (end-start).days
+            if end>today and start>=weeks:
+                n_weeks+= (today-start).days
+            if end<=today and start<=weeks:
+                n_weeks+= (end-weeks).days
+            if req.start_date>=six_months and req.end_date<=today :
+                n_6months+= (end-start).days
+            if end>today and start>=six_months:
+                n_6months+= (today-start).days
+            if end<=today and start<=six_months:
+                n_6months+= (end-six_months).days
+            if req.start_date>=one_month and req.end_date<=today :
+                n_1month+= (end-start).days
+            if end>today and start>=one_month:
+                n_1month+= (today-start).days
+            if end<=today and start<=one_month:
+                n_1month+= (end-one_month).days
+            if req.start_date>=years and req.end_date<=today :
+                n_years+= (end-start).days  
+            if end>today and start>=years:
+                n_years+= (today-start).days
+            if end<=today and start<=years:
+                n_years+= (end-years).days
+            
+        else:
+            continue
+    print(n_weeks)
+    print(n_6months)
+    print(n_1month)
+    print(n_years)
     context = {'members': members, 'id': id, 'leave': leave}
     return render(request, 'dashboard/user.html', context)
 
@@ -131,9 +173,7 @@ def approve(request):
         
         if 'approved' in request.POST.keys():
             reqe.status = "approved"
-            reqe.save(update_fields=['status'])
-            messages.success(request, 'Leave request approved.')
-            
+            reqe.save(update_fields=['status'])            
             msg = EmailMultiAlternatives(
             'Leave request status', f'Your leave request from {reqe.start_date} to {reqe.end_date} has been approved ', EMAIL_HOST_USER, maillist)
             msg.send()
@@ -141,7 +181,6 @@ def approve(request):
         elif 'rejected' in request.POST.keys():
             reqe.status = "rejected"
             reqe.save(update_fields=['status'])
-            messages.success(request, 'Leave request rejected.')
             msg = EmailMultiAlternatives(
             'Leave request status', f'Your leave request from {reqe.start_date} to {reqe.end_date} has been rejected ', EMAIL_HOST_USER, maillist)
             msg.send()
