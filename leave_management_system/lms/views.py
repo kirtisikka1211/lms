@@ -10,6 +10,7 @@ from leave_management_system.settings import EMAIL_HOST_USER
 from django.contrib import messages
 from datetime import date
 from dateutil.relativedelta import relativedelta
+from datetime import datetime
 
 def members_list(request):
     members = Members.objects.all()
@@ -85,56 +86,48 @@ def user(request, id):
     user = get_object_or_404(Members, id=id)
     members = Members.objects.all()
     leave= Leave.objects.all()
-    today= date.today()
-    six_months = date.today() + relativedelta(months=-6)
-    one_month = date.today() + relativedelta(months=-1)
-    weeks= date.today() + relativedelta(days=-7)
-    years= date.today() + relativedelta(years=-1)
-    n_weeks=0
-    n_6months=0
-    n_1month=0
-    n_years=0
-    for users in members:
-        if users.id==id:
-            user_id=users.user_id
-    for req in leave:
-        if req.user_id==user_id:
-            start=req.start_date
-            end=req.end_date
-            
-            if start>today:
-                continue
-            if req.start_date>=weeks and req.end_date<=today :
-                n_weeks+= (end-start).days
-            if end>today and start>=weeks:
-                n_weeks+= (today-start).days
-            if end<=today and start<=weeks:
-                n_weeks+= (end-weeks).days
-            if req.start_date>=six_months and req.end_date<=today :
-                n_6months+= (end-start).days
-            if end>today and start>=six_months:
-                n_6months+= (today-start).days
-            if end<=today and start<=six_months:
-                n_6months+= (end-six_months).days
-            if req.start_date>=one_month and req.end_date<=today :
-                n_1month+= (end-start).days
-            if end>today and start>=one_month:
-                n_1month+= (today-start).days
-            if end<=today and start<=one_month:
-                n_1month+= (end-one_month).days
-            if req.start_date>=years and req.end_date<=today :
-                n_years+= (end-start).days  
-            if end>today and start>=years:
-                n_years+= (today-start).days
-            if end<=today and start<=years:
-                n_years+= (end-years).days
-            
-        else:
-            continue
-    print(n_weeks)
-    print(n_6months)
-    print(n_1month)
-    print(n_years)
+    # today= date.today()
+    if request.method == 'POST':
+        start_dates = request.POST.get('start-date')
+        end_dates = request.POST.get('end-date')
+        start_date = datetime.strptime(start_dates, '%Y-%m-%d').date()
+        print(type(start_date))
+        print(start_date)
+        end_date = datetime.strptime(end_dates, '%Y-%m-%d').date()
+        print(end_date)  
+        n_days=0
+        n_dayst= (end_date-start_date).days
+        for users in members:
+            if users.id==id:
+                print(id)
+                user_id=users.user_id
+                print(user_id)
+        for req in leave:
+            if req.user_id==user_id:
+                start=req.start_date
+                end=req.end_date
+                if start>end_date or end<start_date:
+                    print("no")
+                    continue
+
+                if start>=start_date and end<=end_date:
+                    print("y")
+                    n_days+= (end-start).days
+                if end>end_date and start>=start_date:
+                    print("e")
+                    n_days+= (end_date-start).days
+                if end<=end_date and start<start_date:
+                    print("s")
+                    n_days+= (end-start_date).days
+        print(n_days)
+        print(n_dayst)
+        a= n_days
+        b= n_dayst
+        days_present=b-a
+        dict={'n_days':n_days,'n_dayst':n_dayst, 'days_present': days_present }
+   
+        context = {'members': members, 'id': id, 'leave': leave, 'dict': dict}
+        return render(request, 'dashboard/user.html', context)
     context = {'members': members, 'id': id, 'leave': leave}
     return render(request, 'dashboard/user.html', context)
 
